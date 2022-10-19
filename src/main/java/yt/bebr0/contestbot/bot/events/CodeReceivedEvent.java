@@ -23,7 +23,7 @@ public class CodeReceivedEvent implements EventListener {
 
             if (event.getChannel() instanceof PrivateChannel) {
                 if (event.getMessage().getContentRaw().startsWith("```")) {
-                    Tester.instance.run(event.getAuthor().getId(), event.getMessage().getContentRaw().replaceAll("```", ""));
+                    Tester.instance.runJava(event.getMessage().getAuthor().getId(), event.getMessage().getContentRaw().replaceAll("```", ""));
                 }
             }
         }
