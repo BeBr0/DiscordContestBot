@@ -12,5 +12,7 @@ public class DummyCode {
         if (a < 10) {
             System.out.println("Done");
         }
+
+        System.out.println("Done1");
     }
 }
