@@ -4,10 +4,12 @@ public class TestCase {
 
     private final String input;
     private final String expectedOutput;
+    private final Task task;
 
-    public TestCase(String input, String expectedOutput) {
+    public TestCase(Task task, String input, String expectedOutput) {
         this.input = input;
         this.expectedOutput = expectedOutput;
+        this.task = task;
     }
 
     public boolean isPassed(String output) {
@@ -20,5 +22,9 @@ public class TestCase {
 
     public String getExpectedOutput() {
         return expectedOutput;
+    }
+
+    public Task getTask() {
+        return task;
     }
 }

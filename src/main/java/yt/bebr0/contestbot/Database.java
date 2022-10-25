@@ -1,5 +1,8 @@
 package yt.bebr0.contestbot;
 
+import yt.bebr0.contestbot.testing.task.Task;
+import yt.bebr0.contestbot.testing.task.TestCase;
+
 import java.sql.*;
 
 /**
@@ -41,5 +44,19 @@ public class Database {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addTaskToDatabase(Task task) {
+        try {
+            statement.execute("INSERT INTO Tasks VALUES(" + task.getName() + ", " + task.getTask() + ")");
+        }
+        catch (SQLException ignored) {}
+    }
+
+    public void addTestToDatabase(TestCase testCase) {
+        try {
+            statement.execute("INSERT INTO Tests VALUES(" + testCase.getTask().getName() + ", " + testCase.getInput() + ", " + testCase.getExpectedOutput() + ")");
+        }
+        catch (SQLException ignored) {}
     }
 }

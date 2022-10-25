@@ -17,56 +17,75 @@ public class SlashCommandEvent extends ListenerAdapter {
         switch (event.getName()) {
             case "add_task" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
-                    if (event.getOption("имя задачи") != null && event.getOption("текст задания") != null) {
+                    if (event.getOption("имя") != null && event.getOption("задание") != null) {
                         Task.addTask(
                                 new Task(
-                                        event.getOption("имя задачи").getAsString(),
-                                        event.getOption("текст задания").getAsString()
+                                        event.getOption("имя").getAsString(),
+                                        event.getOption("задание").getAsString()
                                 )
                         );
-                    }
 
-                    event.reply("Добавлено!").setEphemeral(true).queue();
+                        event.reply("Добавлено!").setEphemeral(true).queue();
+                    }
+                    else {
+                        event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
+                    }
                 }
                 else
                     event.reply("Недостаточно прав!").setEphemeral(true).queue();
             }
             case "remove_task" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
-                    if (event.getOption("имя задачи") != null) {
+                    if (event.getOption("имя") != null) {
                         Task.removeTask(
-                                Task.getTask(event.getOption("имя задачи").getAsString())
+                                Task.getTask(event.getOption("имя").getAsString())
                         );
+
+                        event.reply("Удалено!").setEphemeral(true).queue();
+                    }
+                    else {
+                        event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
                     }
 
-                    event.reply("Удалено!").setEphemeral(true).queue();
                 }
                 else
                     event.reply("Недостаточно прав!").setEphemeral(true).queue();
             }
             case "add_test_case" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
-                    if (event.getOption("ввод") != null && event.getOption("вывод") != null && event.getOption("имя задания") != null) {
-                        Task.getTask(event.getOption("имя задания").getAsString())
-                                .addTestCase(new TestCase(
+                    if (event.getOption("ввод") != null && event.getOption("вывод") != null
+                            && event.getOption("задание") != null) {
+
+                        Task task = Task.getTask(event.getOption("задание").getAsString());
+                        task.addTestCase(new TestCase(
+                                        task,
                                         event.getOption("ввод").getAsString(),
                                         event.getOption("вывод").getAsString()
                                 ));
-                    }
 
-                    event.reply("Добавлено!").setEphemeral(true).queue();
+
+                        event.reply("Добавлено!").setEphemeral(true).queue();
+                    }
+                    else {
+                        event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
+                    }
                 }
                 else
                     event.reply("Недостаточно прав!").setEphemeral(true).queue();
             }
             case "remove_test_case" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
-                    if (event.getOption("имя задания") != null && event.getOption("номер") != null) {
-                        Task.getTask(event.getOption("имя задания").getAsString()).getTestCases()
+                    if (event.getOption("задание") != null && event.getOption("номер") != null) {
+                        Task.getTask(event.getOption("задание").getAsString()).getTestCases()
                                 .remove(event.getOption("номер").getAsInt());
+
+
+                        event.reply("Удалено!").setEphemeral(true).queue();
+                    }
+                    else {
+                        event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
                     }
 
-                    event.reply("Удалено!").setEphemeral(true).queue();
                 }
                 else
                     event.reply("Недостаточно прав!").setEphemeral(true).queue();
@@ -138,6 +157,7 @@ public class SlashCommandEvent extends ListenerAdapter {
                         .addOption(OptionType.INTEGER, "номер", "номер тест кейса, который необходимо удалить"),
                 Commands.slash("admin_info", "Отправляет информацию о заданиях и существующих тест-кейсах к ним в лс"),
                 Commands.slash("info", "Отправляет в личные сообщения пользовательскую информацию о заданиях")
+
         ).queue();
     }
 }

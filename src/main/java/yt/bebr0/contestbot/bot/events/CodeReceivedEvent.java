@@ -37,7 +37,10 @@ public class CodeReceivedEvent extends ListenerAdapter {
                     if (code.startsWith(language.getName().toLowerCase())) {
                         System.out.println("Language " + language.getName());
                         code = code.replace(language.getName().toLowerCase(), "");
-                        Task task = Task.getTask(code.substring(code.indexOf(language.getCommentMarker()) + 1, code.indexOf("\n")));
+
+                        String taskName = code.substring(code.indexOf(language.getCommentMarker()) + 1, code.indexOf("\n", code.indexOf(language.getCommentMarker())));
+                        System.out.println("Task name is " + taskName);
+                        Task task = Task.getTask(taskName);
 
                         if (task == null) {
                             Bot.instance.textTo(event.getAuthor().getId(), "Неверное имя задачи!");

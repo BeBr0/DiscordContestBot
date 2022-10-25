@@ -28,9 +28,7 @@ public class Bot {
         jda = JDABuilder.createDefault("MTAzMDc3Mzk2NTAwMzY5MDA1NA.GXxciM.7NgCxfrpnrdRTvDuEXfaqkrk9HgAdiTv3_6dTU")
                 .addEventListeners(new CodeReceivedEvent(), new SlashCommandEvent())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-                .build()
-
-        ;
+                .build();
 
         try {
             jda.awaitReady();
