@@ -27,6 +27,10 @@ public class Task {
         tasks.remove(task);
     }
 
+    public static List<Task> getTasksCopy() {
+        return new ArrayList<>(tasks);
+    }
+
     private final String name;
     private final String task;
     private final List<TestCase> testCases = new ArrayList<>();

@@ -18,4 +18,7 @@ public class TestCase {
         return input;
     }
 
+    public String getExpectedOutput() {
+        return expectedOutput;
+    }
 }

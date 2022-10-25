@@ -30,10 +30,12 @@ public class CodeReceivedEvent extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getChannel() instanceof PrivateChannel) {
             if (event.getMessage().getContentRaw().startsWith("```")) {
+                System.out.println("Code detected");
                 String code = event.getMessage().getContentRaw().replaceAll("```", "");
 
                 for (Language language: Language.values()) {
                     if (code.startsWith(language.getName().toLowerCase())) {
+                        System.out.println("Language " + language.getName());
                         code = code.replace(language.getName().toLowerCase(), "");
                         Task task = Task.getTask(code.substring(code.indexOf(language.getCommentMarker()) + 1, code.indexOf("\n")));
 
@@ -53,14 +55,10 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         message.append("```");
 
                         Bot.instance.textTo(event.getAuthor().getId(), message.toString());
+                        break;
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        super.onSlashCommandInteraction(event);
     }
 }

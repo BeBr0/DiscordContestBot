@@ -5,8 +5,8 @@ import yt.bebr0.contestbot.testing.languages.impls.PythonTester;
 
 public enum Language {
 
-    JAVA("Java", JavaTester.instance, "//"),
-    PYTHON("Python", PythonTester.instance, "#"),
+    JAVA("java", JavaTester.instance, "//"),
+    PYTHON("python", PythonTester.instance, "#"),
     ;
 
     private final String name;

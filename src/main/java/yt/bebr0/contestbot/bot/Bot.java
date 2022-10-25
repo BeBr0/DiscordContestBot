@@ -2,8 +2,14 @@ package yt.bebr0.contestbot.bot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.data.DataObject;
 import yt.bebr0.contestbot.bot.events.CodeReceivedEvent;
+import yt.bebr0.contestbot.bot.events.SlashCommandEvent;
 
 /**
  * File is part of BeBrAPI. Thank you for using it! Also check out my YouTube channel where you can also leave your suggestions! https://www.youtube.com/c/BeBr0
@@ -20,9 +26,11 @@ public class Bot {
 
     public void initialize() {
         jda = JDABuilder.createDefault("MTAzMDc3Mzk2NTAwMzY5MDA1NA.GXxciM.7NgCxfrpnrdRTvDuEXfaqkrk9HgAdiTv3_6dTU")
-                .addEventListeners(new CodeReceivedEvent())
+                .addEventListeners(new CodeReceivedEvent(), new SlashCommandEvent())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-                .build();
+                .build()
+
+        ;
 
         try {
             jda.awaitReady();
