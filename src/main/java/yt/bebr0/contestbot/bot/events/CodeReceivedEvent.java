@@ -28,6 +28,7 @@ public class CodeReceivedEvent extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        System.out.println("1");
         if (event.getChannel() instanceof PrivateChannel) {
             if (event.getMessage().getContentRaw().startsWith("```")) {
                 String code = event.getMessage().getContentRaw().replaceAll("```", "");
@@ -35,7 +36,11 @@ public class CodeReceivedEvent extends ListenerAdapter {
                 for (Language language: Language.values()) {
                     if (code.startsWith(language.getName().toLowerCase())) {
                         code = code.replace(language.getName().toLowerCase(), "");
-                        Task task = Task.getTask(code.substring(code.indexOf(language.getCommentMarker()) + 1, code.indexOf("\n")));
+
+                        Task task = Task.getTask(code.substring(
+                                code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length(),
+                                code.indexOf("\n", code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length())
+                        ));
 
                         if (task == null) {
                             Bot.instance.textTo(event.getAuthor().getId(), "Неверное имя задачи!");

@@ -3,13 +3,11 @@ package yt.bebr0.contestbot.testing.languages.impls;
 import org.python.util.PythonInterpreter;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
-import yt.bebr0.contestbot.testing.task.TestCase;
 
 import java.io.CharArrayReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.List;
-import java.util.Map;
 
 public class PythonTester extends Tester {
 
