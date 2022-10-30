@@ -1,17 +1,17 @@
 package yt.bebr0.contestbot.testing.languages.impls;
 
-import org.python.antlr.ast.Str;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
-import yt.bebr0.contestbot.testing.task.TestCase;
 
-import javax.tools.*;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Code written by BeBr0. Check out my YouTube - <a href="https://www.youtube.com/c/BeBr0">...</a>
@@ -40,7 +40,10 @@ public class JavaTester extends Tester {
     @Override
     protected String run(String code, String input) {
 
-        String newCode = "package yt.bebr0.contestbot.testing;\n\npublic class Run {\n public static void main(String[] args) {\n" + code + "}\n}";
+        String imports = code.substring(code.indexOf("import"), code.indexOf("public"));
+        String pureCode = code.substring(code.indexOf("public static void main(String[] args) {"), code.length());
+
+        String newCode = "package yt.bebr0.contestbot.testing;\n" + imports + "\npublic class Run {\n public static void main(String[] args) {\n" + pureCode + "}\n}";
 
         try {
             File fileToCompile = new File("src/main/java/yt/bebr0/contestbot/testing", "Run.java");
