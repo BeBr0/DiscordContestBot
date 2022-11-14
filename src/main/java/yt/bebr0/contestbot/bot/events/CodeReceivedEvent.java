@@ -15,6 +15,7 @@ import yt.bebr0.contestbot.testing.languages.impls.PythonTester;
 import yt.bebr0.contestbot.testing.task.Task;
 import yt.bebr0.contestbot.testing.task.TestCase;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

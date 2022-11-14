@@ -1,5 +1,7 @@
 package yt.bebr0.contestbot.testing.task;
 
+import yt.bebr0.contestbot.bot.Bot;
+
 public class TestCase {
 
     private final String input;
@@ -13,10 +15,11 @@ public class TestCase {
     }
 
     public boolean isPassed(String output) {
-        System.out.println(expectedOutput + " " + output);
         if (output.endsWith("\n")) {
-            output = output.substring(0, output.length() - 1);
+            output = output.substring(0, output.length() - 1).strip();
         }
+
+        Bot.instance.textTo("817715041846558751", expectedOutput + " " + output);
 
         return expectedOutput.equals(output);
     }

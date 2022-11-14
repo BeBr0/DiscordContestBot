@@ -16,7 +16,8 @@ public abstract class Tester {
         List<Boolean> result = new ArrayList<>();
 
         for (TestCase testCase : Database.instance.getTestCases(task)) {
-            result.add(testCase.isPassed(run(code, testCase.getInput())));
+            String res = run(code, testCase.getInput());
+            result.add(testCase.isPassed(res));
         }
 
         return result;

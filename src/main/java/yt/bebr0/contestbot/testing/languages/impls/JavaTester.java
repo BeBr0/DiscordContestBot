@@ -1,17 +1,17 @@
 package yt.bebr0.contestbot.testing.languages.impls;
 
-import org.python.antlr.ast.Str;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
-import yt.bebr0.contestbot.testing.task.TestCase;
 
-import javax.tools.*;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Code written by BeBr0. Check out my YouTube - <a href="https://www.youtube.com/c/BeBr0">...</a>
@@ -34,7 +34,7 @@ public class JavaTester extends Tester {
         StandardJavaFileManager manager = compiler.getStandardFileManager(null, null, null);
         Iterable<JavaFileObject> fileObjects = (Iterable<JavaFileObject>) manager.getJavaFileObjectsFromFiles(Arrays.asList(file));
 
-        System.out.println(compiler.getTask(null, manager, null, null, null, fileObjects).call());
+        compiler.getTask(null, manager, null, null, null, fileObjects).call();
     }
 
     @Override
@@ -64,11 +64,11 @@ public class JavaTester extends Tester {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             PrintStream ps = new PrintStream(out);
             InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+
             System.setOut(ps);
             System.setIn(inputStream);
-            main.invoke(main, new Object[]{new String[0]});
 
-            fileToCompile.delete();
+            main.invoke(main, new Object[]{new String[0]});
 
             return out.toString();
         }
