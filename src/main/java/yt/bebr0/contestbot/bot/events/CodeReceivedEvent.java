@@ -31,7 +31,6 @@ public class CodeReceivedEvent extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getChannel() instanceof PrivateChannel) {
             if (event.getMessage().getContentRaw().startsWith("```")) {
-                System.out.println("Code detected");
                 String code = event.getMessage().getContentRaw().replaceAll("```", "");
 
                 for (Language language: Language.values()) {
@@ -55,7 +54,9 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         StringBuilder message = new StringBuilder("```");
                         for (int i = 0; i < result.size(); i++) {
                             if (result.get(i))
-                                message.append(i).append(1).append(": ✅");
+                                message.append(i).append(": ✅\n");
+                            else
+                                message.append(i).append(": ❌\n");
                         }
 
                         message.append("```");

@@ -87,16 +87,14 @@ public class SlashCommandEvent extends ListenerAdapter {
                             event.reply("Такого задания не существует!").setEphemeral(true).queue();
                             return;
                         }
-                        Database.instance.getTestCases(task)
-                                .remove(event.getOption("номер").getAsInt());
 
+                        Database.instance.removeTestFromDatabase(event.getOption("номер").getAsInt());
 
                         event.reply("Удалено!").setEphemeral(true).queue();
                     }
                     else {
                         event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
                     }
-
                 }
                 else
                     event.reply("Недостаточно прав!").setEphemeral(true).queue();

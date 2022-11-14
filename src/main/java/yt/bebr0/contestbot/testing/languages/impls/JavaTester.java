@@ -34,7 +34,7 @@ public class JavaTester extends Tester {
         StandardJavaFileManager manager = compiler.getStandardFileManager(null, null, null);
         Iterable<JavaFileObject> fileObjects = (Iterable<JavaFileObject>) manager.getJavaFileObjectsFromFiles(Arrays.asList(file));
 
-        compiler.getTask(null, manager, null, null, null, fileObjects).call();
+        System.out.println(compiler.getTask(null, manager, null, null, null, fileObjects).call());
     }
 
     @Override
@@ -44,8 +44,6 @@ public class JavaTester extends Tester {
         String pureCode = code.substring(code.indexOf("{") + 1);
 
         String newCode = "package yt.bebr0.contestbot.testing;\n" + imports + "\npublic class Run {\n" + pureCode;
-
-        System.out.println(newCode);
 
         try {
             File fileToCompile = new File("src/main/java/yt/bebr0/contestbot/testing", "Run.java");
@@ -74,8 +72,21 @@ public class JavaTester extends Tester {
 
             return out.toString();
         }
-        catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
-               InvocationTargetException ignored) {}
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e){
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
         return "NO OUT";
     }

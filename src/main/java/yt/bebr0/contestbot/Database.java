@@ -65,13 +65,28 @@ public class Database {
         }
     }
 
+    public void removeTestFromDatabase(int num) {
+        try {
+            statement.execute("DELETE FROM Tests WHERE test_id=" + num);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Nullable
     public Task getTask(String name) {
         try {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Tasks WHERE task_name='" + name + "'");
 
             if (resultSet.next()) {
-                return new Task(resultSet.getString(1), resultSet.getString(2));
+                Task task = new Task(resultSet.getString(1), resultSet.getString(2));
+
+                for (TestCase testCase: getTestCases(task)) {
+                    task.addTestCase(testCase);
+                }
+
+                return task;
             }
         } catch (SQLException e) {
             e.printStackTrace();

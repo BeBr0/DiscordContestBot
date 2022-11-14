@@ -5,6 +5,7 @@ import yt.bebr0.contestbot.testing.task.Task;
 import yt.bebr0.contestbot.testing.task.TestCase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Tester {

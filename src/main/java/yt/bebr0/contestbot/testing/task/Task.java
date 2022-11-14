@@ -14,16 +14,16 @@ public class Task {
         this.task = task;
     }
 
-    public void addTestCase(TestCase testCase) {
-        testCases.add(testCase);
-    }
-
     public String getName() {
         return name;
     }
 
     public String getTask() {
         return task;
+    }
+
+    public void addTestCase(TestCase testCase) {
+        testCases.add(testCase);
     }
 
     public List<TestCase> getTestCases() {
