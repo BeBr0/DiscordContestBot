@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import yt.bebr0.contestbot.Database;
 import yt.bebr0.contestbot.bot.Bot;
 import yt.bebr0.contestbot.testing.languages.Language;
 import yt.bebr0.contestbot.testing.languages.impls.JavaTester;
@@ -35,12 +36,14 @@ public class CodeReceivedEvent extends ListenerAdapter {
 
                 for (Language language: Language.values()) {
                     if (code.startsWith(language.getName().toLowerCase())) {
-                        code = code.replace(language.getName().toLowerCase(), "");
+                        code = code.replaceFirst(language.getName().toLowerCase(), "");
 
-                        Task task = Task.getTask(code.substring(
-                                code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length(),
+                        String taskName = code.substring(
+                                code.indexOf(language.getCommentMarker()) + 1 + language.getCommentMarker().length(),
                                 code.indexOf("\n", code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length())
-                        ));
+                        );
+
+                        Task task = Database.instance.getTask(taskName);
 
                         if (task == null) {
                             Bot.instance.textTo(event.getAuthor().getId(), "Неверное имя задачи!");

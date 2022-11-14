@@ -41,9 +41,11 @@ public class JavaTester extends Tester {
     protected String run(String code, String input) {
 
         String imports = code.substring(code.indexOf("import"), code.indexOf("public"));
-        String pureCode = code.substring(code.indexOf("public static void main(String[] args) {"), code.length());
+        String pureCode = code.substring(code.indexOf("{") + 1);
 
-        String newCode = "package yt.bebr0.contestbot.testing;\n" + imports + "\npublic class Run {\n public static void main(String[] args) {\n" + pureCode + "}\n}";
+        String newCode = "package yt.bebr0.contestbot.testing;\n" + imports + "\npublic class Run {\n" + pureCode;
+
+        System.out.println(newCode);
 
         try {
             File fileToCompile = new File("src/main/java/yt/bebr0/contestbot/testing", "Run.java");
