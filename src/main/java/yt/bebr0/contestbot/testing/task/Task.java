@@ -1,8 +1,5 @@
 package yt.bebr0.contestbot.testing.task;
 
-import org.jetbrains.annotations.Nullable;
-import yt.bebr0.contestbot.Database;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +7,6 @@ public class Task {
 
     private static final List<Task> tasks = new ArrayList<>();
 
-    @Nullable
     public static Task getTask(String name) {
         for (Task task : tasks) {
             if (task.name.equals(name))
@@ -22,16 +18,10 @@ public class Task {
 
     public static void addTask(Task task) {
         tasks.add(task);
-
-        Database.instance.addTaskToDatabase(task);
     }
 
     public static void removeTask(Task task) {
         tasks.remove(task);
-    }
-
-    public static List<Task> getTasksCopy() {
-        return new ArrayList<>(tasks);
     }
 
     private final String name;
@@ -45,8 +35,6 @@ public class Task {
 
     public void addTestCase(TestCase testCase) {
         testCases.add(testCase);
-
-        Database.instance.addTestToDatabase(testCase);
     }
 
     public String getName() {

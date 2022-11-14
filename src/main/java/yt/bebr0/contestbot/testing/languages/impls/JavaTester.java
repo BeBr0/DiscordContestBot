@@ -1,17 +1,17 @@
 package yt.bebr0.contestbot.testing.languages.impls;
 
+import org.python.antlr.ast.Str;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
+import yt.bebr0.contestbot.testing.task.TestCase;
 
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
+import javax.tools.*;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Code written by BeBr0. Check out my YouTube - <a href="https://www.youtube.com/c/BeBr0">...</a>

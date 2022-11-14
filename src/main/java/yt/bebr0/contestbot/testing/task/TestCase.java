@@ -13,6 +13,11 @@ public class TestCase {
     }
 
     public boolean isPassed(String output) {
+        System.out.println(output);
+        if (output.endsWith("\n")) {
+            output = output.substring(0, output.length() - 1);
+        }
+
         return expectedOutput.equals(output);
     }
 

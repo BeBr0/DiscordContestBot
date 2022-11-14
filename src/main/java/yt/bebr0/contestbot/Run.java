@@ -8,7 +8,7 @@ import yt.bebr0.contestbot.bot.Bot;
  * @author BeBr0
  */
 
-public class Main {
+public class Run {
 
     public static void main(String[] args) {
         Bot.instance.initialize();

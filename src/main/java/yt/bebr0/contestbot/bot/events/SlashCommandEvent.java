@@ -18,7 +18,7 @@ public class SlashCommandEvent extends ListenerAdapter {
             case "add_task" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
                     if (event.getOption("имя") != null && event.getOption("задание") != null) {
-                        Task.addTask(
+                        Database.instance.addTask(
                                 new Task(
                                         event.getOption("имя").getAsString(),
                                         event.getOption("задание").getAsString()
@@ -37,8 +37,8 @@ public class SlashCommandEvent extends ListenerAdapter {
             case "remove_task" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
                     if (event.getOption("имя") != null) {
-                        Task.removeTask(
-                                Task.getTask(event.getOption("имя").getAsString())
+                        Database.instance.removeTask(
+                                event.getOption("имя").getAsString()
                         );
 
                         event.reply("Удалено!").setEphemeral(true).queue();
@@ -56,15 +56,20 @@ public class SlashCommandEvent extends ListenerAdapter {
                     if (event.getOption("ввод") != null && event.getOption("вывод") != null
                             && event.getOption("задание") != null) {
 
-                        Task task = Task.getTask(event.getOption("задание").getAsString());
-                        task.addTestCase(new TestCase(
-                                        task,
-                                        event.getOption("ввод").getAsString(),
-                                        event.getOption("вывод").getAsString()
-                                ));
+                        Task task = Database.instance.getTask(event.getOption("задание").getAsString());
 
+                        if (task != null) {
+                            Database.instance.addTestToDatabase(new TestCase(
+                                    task,
+                                    event.getOption("ввод").getAsString(),
+                                    event.getOption("вывод").getAsString()
+                            ));
 
-                        event.reply("Добавлено!").setEphemeral(true).queue();
+                            event.reply("Добавлено!").setEphemeral(true).queue();
+                        }
+                        else {
+                            event.reply("Такого задания не существует").setEphemeral(true).queue();
+                        }
                     }
                     else {
                         event.reply("Недостаточно аргументов!").setEphemeral(true).queue();
@@ -76,7 +81,13 @@ public class SlashCommandEvent extends ListenerAdapter {
             case "remove_test_case" -> {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
                     if (event.getOption("задание") != null && event.getOption("номер") != null) {
-                        Task.getTask(event.getOption("задание").getAsString()).getTestCases()
+                        Task task = Database.instance.getTask(event.getOption("задание").getAsString());
+
+                        if (task == null) {
+                            event.reply("Такого задания не существует!").setEphemeral(true).queue();
+                            return;
+                        }
+                        Database.instance.getTestCases(task)
                                 .remove(event.getOption("номер").getAsInt());
 
 
@@ -101,7 +112,7 @@ public class SlashCommandEvent extends ListenerAdapter {
             case "info" -> {
                 StringBuilder info = new StringBuilder().append("```==========Информация===========\n");
 
-                for (Task task: Task.getTasksCopy()) {
+                for (Task task: Database.instance.getTasks()) {
                     info.append(task.getName()).append(":\n").append(task.getTask()).append("\n");
                 }
 
@@ -112,10 +123,10 @@ public class SlashCommandEvent extends ListenerAdapter {
                 if (Database.instance.isAdmin(event.getUser().getId())) {
                     StringBuilder info = new StringBuilder().append("```==========Информация===========\n");
 
-                    for (Task task: Task.getTasksCopy()) {
+                    for (Task task: Database.instance.getTasks()) {
                         info.append(task.getName()).append(":\n").append(task.getTask()).append("\n");
 
-                        for (TestCase testCase: task.getTestCases()) {
+                        for (TestCase testCase: Database.instance.getTestCases(task)) {
                             info
                                     .append("\tВвод: ")
                                     .append(testCase.getInput())

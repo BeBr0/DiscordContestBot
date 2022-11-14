@@ -1,12 +1,11 @@
 package yt.bebr0.contestbot.testing.languages;
 
+import yt.bebr0.contestbot.Database;
 import yt.bebr0.contestbot.testing.task.Task;
 import yt.bebr0.contestbot.testing.task.TestCase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Tester {
 
@@ -15,7 +14,7 @@ public abstract class Tester {
     public List<Boolean> test(Task task, String code) {
         List<Boolean> result = new ArrayList<>();
 
-        for (TestCase testCase : task.getTestCases()) {
+        for (TestCase testCase : Database.instance.getTestCases(task)) {
             result.add(testCase.isPassed(run(code, testCase.getInput())));
         }
 
