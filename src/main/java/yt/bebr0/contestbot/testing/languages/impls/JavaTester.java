@@ -7,9 +7,9 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,10 +43,10 @@ public class JavaTester extends Tester {
         String imports = code.substring(code.indexOf("import"), code.indexOf("public"));
         String pureCode = code.substring(code.indexOf("{") + 1);
 
-        String newCode = "package yt.bebr0.contestbot.testing;\n" + imports + "\npublic class Run {\n" + pureCode;
+        String newCode = imports + "\npublic class Run {\n" + pureCode;
 
         try {
-            File fileToCompile = new File("src/main/java/yt/bebr0/contestbot/testing", "Run.java");
+            File fileToCompile = new File("Run.java");
 
             fileToCompile.createNewFile();
 
@@ -69,12 +69,12 @@ public class JavaTester extends Tester {
                             "    cmd = ['java', java_class]\n" +
                             "    proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)\n" +
                             "    stdout,stderr = proc.communicate(stdin)\n" +
-                            "    print ('This was \"' + stdout + '\"')\n" +
-                            "execute_java(File(" + fileToCompile.getAbsolutePath() + ", " + input + ")",
+                            "    print (stdout)\n" +
+                            "execute_java('" + fileToCompile.getName() + "', '" + input + "')",
                     input
             );
 
-            return out.toString();
+            return out;
         } catch (IOException e) {
             e.printStackTrace();
         }
