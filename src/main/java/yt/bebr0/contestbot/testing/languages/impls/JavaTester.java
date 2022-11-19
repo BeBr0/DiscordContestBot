@@ -57,7 +57,7 @@ public class JavaTester extends Tester {
 
             compile(fileToCompile);
 
-            String out = PythonTester.instance.run(
+            return PythonTester.instance.run(
                     "import os.path,subprocess\n" +
                             "from subprocess import STDOUT,PIPE\n" +
                             "\n" +
@@ -73,8 +73,6 @@ public class JavaTester extends Tester {
                             "execute_java('" + fileToCompile.getName() + "', '" + input + "')",
                     input
             );
-
-            return out;
         } catch (IOException e) {
             e.printStackTrace();
         }
