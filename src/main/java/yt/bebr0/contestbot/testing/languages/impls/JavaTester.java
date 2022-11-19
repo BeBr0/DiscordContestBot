@@ -57,34 +57,25 @@ public class JavaTester extends Tester {
 
             compile(fileToCompile);
 
-            Class<?> clazz = Class.forName("yt.bebr0.contestbot.testing.Run");
-
-            Method main = clazz.getDeclaredMethod("main", String[].class);
-
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            PrintStream ps = new PrintStream(out);
-            InputStream inputStream = new ByteArrayInputStream(input.getBytes());
-
-            System.setOut(ps);
-            System.setIn(inputStream);
-
-            main.invoke(main, new Object[]{new String[0]});
+            String out = PythonTester.instance.run(
+                    "import os.path,subprocess\n" +
+                            "from subprocess import STDOUT,PIPE\n" +
+                            "\n" +
+                            "def compile_java(java_file):\n" +
+                            "    subprocess.check_call(['javac', java_file])\n" +
+                            "\n" +
+                            "def execute_java(java_file, stdin):\n" +
+                            "    java_class,ext = os.path.splitext(java_file)\n" +
+                            "    cmd = ['java', java_class]\n" +
+                            "    proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)\n" +
+                            "    stdout,stderr = proc.communicate(stdin)\n" +
+                            "    print ('This was \"' + stdout + '\"')\n" +
+                            "execute_java(File(" + fileToCompile.getAbsolutePath() + ", " + input + ")",
+                    input
+            );
 
             return out.toString();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e){
-            e.printStackTrace();
-        }
-        catch (InvocationTargetException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
