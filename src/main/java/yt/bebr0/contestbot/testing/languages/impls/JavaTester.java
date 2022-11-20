@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Code written by BeBr0. Check out my YouTube - <a href="https://www.youtube.com/c/BeBr0">...</a>
@@ -57,22 +58,40 @@ public class JavaTester extends Tester {
 
             compile(fileToCompile);
 
-            return PythonTester.instance.run(
-                    "import os.path,subprocess\n" +
-                            "from subprocess import STDOUT,PIPE\n" +
-                            "\n" +
-                            "def compile_java(java_file):\n" +
-                            "    subprocess.check_call(['javac', java_file])\n" +
-                            "\n" +
-                            "def execute_java(java_file, stdin):\n" +
-                            "    java_class,ext = os.path.splitext(java_file)\n" +
-                            "    cmd = ['java', java_class]\n" +
-                            "    proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)\n" +
-                            "    stdout,stderr = proc.communicate(stdin)\n" +
-                            "    print (stdout)\n" +
-                            "execute_java('" + fileToCompile.getName() + "', '" + input + "')",
-                    input
-            );
+            File output = new File("output.txt");
+            File inputFile = new File("input.txt");
+
+            try {
+                output.createNewFile();
+                inputFile.createNewFile();
+
+                fileWriter.close();
+
+                fileWriter = new FileWriter(inputFile);
+                fileWriter.write(input);
+
+                fileWriter.close();
+
+                ProcessBuilder processBuilder = new ProcessBuilder("java", fileToCompile.getAbsolutePath());
+                processBuilder.redirectErrorStream(true);
+                processBuilder.redirectInput(inputFile);
+                processBuilder.redirectOutput(output);
+
+                Process process = processBuilder.start();
+
+                Scanner scanner = new Scanner(output);
+                StringBuilder outputString = new StringBuilder();
+
+                process.waitFor();
+                while (scanner.hasNextLine()) {
+                    outputString.append(scanner.nextLine());
+                }
+
+                return outputString.toString();
+            }
+            catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

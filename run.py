@@ -1,13 +1,8 @@
-import os.path,subprocess
-from subprocess import STDOUT,PIPE
 
-def compile_java(java_file):
-    subprocess.check_call(['javac', java_file])
+#Сумма двух
 
-def execute_java(java_file, stdin):
-    java_class,ext = os.path.splitext(java_file)
-    cmd = ['java', java_class]
-    proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
-    stdout,stderr = proc.communicate(stdin)
-    print (stdout)
-execute_java('Run.java', '10 5')
+inp = input().split(" ")
+a = int(inp[0])
+b = int(inp[1])
+
+print(a + b)
