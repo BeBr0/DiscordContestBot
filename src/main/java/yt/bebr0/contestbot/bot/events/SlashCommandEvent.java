@@ -128,7 +128,7 @@ public class SlashCommandEvent extends ListenerAdapter {
                             info
                                     .append("\tВвод: ")
                                     .append(testCase.getInput())
-                                    .append("\tВывод")
+                                    .append("\tВывод: ")
                                     .append(testCase.getExpectedOutput())
                                     .append("\n");
                         }

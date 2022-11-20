@@ -97,7 +97,7 @@ public class Database {
 
     public void removeTask(String name) {
         try {
-            statement.execute("DELETE FROM Tasks WHERE task_name=name");
+            statement.execute("DELETE FROM Tasks WHERE task_name='" + name + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

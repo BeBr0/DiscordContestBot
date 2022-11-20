@@ -39,7 +39,7 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         code = code.replaceFirst(language.getName().toLowerCase(), "");
 
                         String taskName = code.substring(
-                                code.indexOf(language.getCommentMarker()) + 1 + language.getCommentMarker().length(),
+                                code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length(),
                                 code.indexOf("\n", code.indexOf(language.getCommentMarker()) + language.getCommentMarker().length())
                         );
 

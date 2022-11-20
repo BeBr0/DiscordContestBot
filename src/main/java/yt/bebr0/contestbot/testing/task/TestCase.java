@@ -19,8 +19,6 @@ public class TestCase {
             output = output.substring(0, output.length() - 1).strip();
         }
 
-        Bot.instance.textTo("817715041846558751", expectedOutput + " " + output);
-
         return expectedOutput.equals(output);
     }
 

@@ -1,6 +1,7 @@
 package yt.bebr0.contestbot.testing.languages;
 
 import yt.bebr0.contestbot.Database;
+import yt.bebr0.contestbot.bot.Bot;
 import yt.bebr0.contestbot.testing.task.Task;
 import yt.bebr0.contestbot.testing.task.TestCase;
 
@@ -17,6 +18,7 @@ public abstract class Tester {
 
         for (TestCase testCase : Database.instance.getTestCases(task)) {
             String res = run(code, testCase.getInput());
+
             result.add(testCase.isPassed(res));
         }
 
