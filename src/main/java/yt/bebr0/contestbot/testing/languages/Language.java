@@ -1,12 +1,14 @@
 package yt.bebr0.contestbot.testing.languages;
 
 import yt.bebr0.contestbot.testing.languages.impls.JavaTester;
+import yt.bebr0.contestbot.testing.languages.impls.KotlinTester;
 import yt.bebr0.contestbot.testing.languages.impls.PythonTester;
 
 public enum Language {
 
     JAVA("java", JavaTester.instance, "//"),
     PYTHON("python", PythonTester.instance, "#"),
+    KOTLIN("kotlin", KotlinTester.instance, "//")
     ;
 
     private final String name;

@@ -31,17 +31,14 @@ public class JavaTester extends Tester {
         return super.test(task, code);
     }
 
-    private void compile(File file) {
-        StandardJavaFileManager manager = compiler.getStandardFileManager(null, null, null);
-        Iterable<JavaFileObject> fileObjects = (Iterable<JavaFileObject>) manager.getJavaFileObjectsFromFiles(Arrays.asList(file));
-
-        compiler.getTask(null, manager, null, null, null, fileObjects).call();
-    }
-
     @Override
     protected String run(String code, String input) {
+        String imports = "";
 
-        String imports = code.substring(code.indexOf("import"), code.indexOf("public"));
+        if (code.contains("import") && code.contains("public")) {
+            imports += code.substring(code.indexOf("import"), code.indexOf("public"));
+        }
+
         String pureCode = code.substring(code.indexOf("{") + 1);
 
         String newCode = imports + "\npublic class Run {\n" + pureCode;
@@ -55,8 +52,6 @@ public class JavaTester extends Tester {
             fileWriter.append(newCode);
 
             fileWriter.close();
-
-            compile(fileToCompile);
 
             File output = new File("output.txt");
             File inputFile = new File("input.txt");
