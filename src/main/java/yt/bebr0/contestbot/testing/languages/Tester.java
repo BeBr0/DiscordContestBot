@@ -19,6 +19,7 @@ public abstract class Tester {
         for (TestCase testCase : Database.instance.getTestCases(task)) {
             String res = run(code, testCase.getInput());
 
+            System.out.println(res);
             result.add(testCase.isPassed(res));
         }
 
