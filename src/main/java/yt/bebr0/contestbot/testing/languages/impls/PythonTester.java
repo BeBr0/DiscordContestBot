@@ -1,11 +1,11 @@
 package yt.bebr0.contestbot.testing.languages.impls;
 
-import org.python.util.PythonInterpreter;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 

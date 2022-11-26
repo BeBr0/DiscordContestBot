@@ -58,7 +58,7 @@ public class Database {
 
     public void addTestToDatabase(TestCase testCase) {
         try {
-            statement.execute("INSERT INTO Tests(task_name, input, output) VALUES('" + testCase.getTask().getName() + "', '" + testCase.getInput() + "', '" + testCase.getExpectedOutput() + "')");
+            statement.execute("INSERT INTO Tests(task_name, input, output) VALUES('" + testCase.task().getName() + "', '" + testCase.input() + "', '" + testCase.expectedOutput() + "')");
         }
         catch (SQLException e) {
             e.printStackTrace();

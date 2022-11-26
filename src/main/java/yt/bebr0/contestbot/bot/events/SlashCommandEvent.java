@@ -127,9 +127,9 @@ public class SlashCommandEvent extends ListenerAdapter {
                         for (TestCase testCase: Database.instance.getTestCases(task)) {
                             info
                                     .append("\tВвод: ")
-                                    .append(testCase.getInput())
+                                    .append(testCase.input())
                                     .append("\tВывод: ")
-                                    .append(testCase.getExpectedOutput())
+                                    .append(testCase.expectedOutput())
                                     .append("\n");
                         }
                     }
