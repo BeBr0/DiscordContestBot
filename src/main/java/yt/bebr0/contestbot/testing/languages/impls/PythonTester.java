@@ -42,7 +42,7 @@ public class PythonTester extends Tester {
             fileWriter.close();
 
             ProcessBuilder processBuilder = new ProcessBuilder("python3", pyFile.getAbsolutePath());
-            processBuilder.redirectErrorStream(true);
+
             processBuilder.redirectInput(inputFile);
             processBuilder.redirectOutput(output);
 
@@ -59,8 +59,9 @@ public class PythonTester extends Tester {
             return outputString.toString();
         }
         catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
+        return noOutText;
     }
 }

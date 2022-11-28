@@ -41,7 +41,7 @@ public class CppTester extends Tester {
             fileWriter.close();
 
             processBuilder = new ProcessBuilder("program.exe");
-            processBuilder.redirectErrorStream(true);
+
             processBuilder.redirectInput(inputFile);
             processBuilder.redirectOutput(output);
 
@@ -62,6 +62,6 @@ public class CppTester extends Tester {
             throw new RuntimeException(e);
         }
 
-        return "NO OUT";
+        return noOutText;
     }
 }

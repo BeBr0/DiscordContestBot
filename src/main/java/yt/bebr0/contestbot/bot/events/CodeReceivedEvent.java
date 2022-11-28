@@ -11,6 +11,7 @@ import yt.bebr0.contestbot.Database;
 import yt.bebr0.contestbot.bot.Bot;
 import yt.bebr0.contestbot.testing.TestResult;
 import yt.bebr0.contestbot.testing.languages.Language;
+import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.languages.impls.JavaTester;
 import yt.bebr0.contestbot.testing.languages.impls.PythonTester;
 import yt.bebr0.contestbot.testing.task.Task;
@@ -56,11 +57,13 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         StringBuilder message = new StringBuilder("```");
                         for (int i = 0; i < result.size(); i++) {
                             if (result.get(i).answer() && result.get(i).timeMilliseconds() <= task.getMaxTimeMills())
-                                message.append(i).append(": ✅\n");
+                                message.append("Тест ").append(i + 1).append(": ✅\n");
                             else if (result.get(i).timeMilliseconds() > task.getMaxTimeMills())
-                                message.append(i).append(": ❌ - Лимит времени исчерпан\n");
+                                message.append("Тест ").append(i + 1).append(": ❌ - Лимит времени исчерпан\n");
+                            else if (result.get(i).answerText().equals(Tester.noOutText) || result.get(i).answerText().equals(""))
+                                message.append("Тест ").append(i + 1).append(": ❌ - Ошибка выполнения программы\n");
                             else
-                                message.append(i).append(": ❌ - Ответ не верный\n");
+                                message.append("Тест ").append(i + 1).append(": ❌ - Ответ не верный\n");
                         }
 
                         message.append("```");

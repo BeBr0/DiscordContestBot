@@ -69,7 +69,7 @@ public class JavaTester extends Tester {
                 fileWriter.close();
 
                 ProcessBuilder processBuilder = new ProcessBuilder("java", fileToCompile.getAbsolutePath());
-                processBuilder.redirectErrorStream(true);
+
                 processBuilder.redirectInput(inputFile);
                 processBuilder.redirectOutput(output);
 
@@ -92,6 +92,6 @@ public class JavaTester extends Tester {
             e.printStackTrace();
         }
 
-        return "NO OUT";
+        return noOutText;
     }
 }
