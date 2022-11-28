@@ -32,7 +32,4 @@ public class Task {
         return maxTimeMills;
     }
 
-    public List<TestCase> getTestCases() {
-        return testCases;
-    }
 }

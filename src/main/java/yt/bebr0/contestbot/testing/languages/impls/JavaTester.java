@@ -5,13 +5,10 @@ import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
 
 import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,8 +21,6 @@ import java.util.Scanner;
 public class JavaTester extends Tester {
 
     public static final JavaTester instance = new JavaTester();
-
-    private final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
     @Override
     public List<TestResult> test(Task task, String code) {
