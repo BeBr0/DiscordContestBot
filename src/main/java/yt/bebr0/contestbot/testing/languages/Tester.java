@@ -1,12 +1,14 @@
 package yt.bebr0.contestbot.testing.languages;
 
 import yt.bebr0.contestbot.Database;
+import yt.bebr0.contestbot.bot.Bot;
 import yt.bebr0.contestbot.testing.TestResult;
 import yt.bebr0.contestbot.testing.task.Task;
 import yt.bebr0.contestbot.testing.task.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Tester {
 
@@ -16,17 +18,40 @@ public abstract class Tester {
         List<TestResult> result = new ArrayList<>();
 
         for (TestCase testCase : Database.instance.getTestCases(task)) {
-            int[] time = new int[1];
-            new Thread(() -> {
-                if (time[0] == -1) {
-                    Thread.yield();
+            AtomicReference<Integer> time = new AtomicReference<>();
+            time.set(0);
+
+            Thread timeThread = new Thread(() -> {
+                while (true) {
+                    if (time.get() > task.getMaxTimeMills()) {
+                        break;
+                    }
+
+                    if (time.get() == -1) {
+                        break;
+                    }
+
+                    time.set(time.get() + 1);
+
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException ignored) {}
                 }
-                time[0]++;
-            }).start();
+            });
 
+            timeThread.start();
             String res = run(code, testCase.input());
+            timeThread.interrupt();
 
-            result.add(new TestResult(testCase.isPassed(res), time[0]));
+            if (time.get() > task.getMaxTimeMills()) {
+                result.add(new TestResult(false, time.get()));
+            }
+            else {
+                result.add(new TestResult(testCase.isPassed(res), time.get()));
+            }
+
+            if (!result.get(result.size() - 1).answer())
+                break;
         }
 
         return result;

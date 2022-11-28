@@ -21,7 +21,8 @@ public class SlashCommandEvent extends ListenerAdapter {
                         Database.instance.addTask(
                                 new Task(
                                         event.getOption("имя").getAsString(),
-                                        event.getOption("задание").getAsString()
+                                        event.getOption("задание").getAsString(),
+                                        event.getOption("время").getAsInt()
                                 )
                         );
 
@@ -152,6 +153,11 @@ public class SlashCommandEvent extends ListenerAdapter {
                                 OptionType.STRING,
                                 "задание",
                                 "формулировка задания, которую увидит пользователь"
+                        )
+                        .addOption(
+                                OptionType.INTEGER,
+                                "время",
+                                "максимальное время выполнения программы"
                         ),
                 Commands.slash("remove_task", "Удаляет задание")
                         .addOption(OptionType.STRING, "имя", "Имя задания"),

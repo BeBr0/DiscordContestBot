@@ -86,7 +86,7 @@ public class JavaTester extends Tester {
                 return outputString.toString();
             }
             catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();

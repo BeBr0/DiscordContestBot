@@ -7,11 +7,13 @@ public class Task {
 
     private final String name;
     private final String task;
+    private final int maxTimeMills;
     private final List<TestCase> testCases = new ArrayList<>();
 
-    public Task(String name, String task) {
+    public Task(String name, String task, int maxTimeMills) {
         this.name = name;
         this.task = task;
+        this.maxTimeMills = maxTimeMills;
     }
 
     public String getName() {
@@ -24,6 +26,10 @@ public class Task {
 
     public void addTestCase(TestCase testCase) {
         testCases.add(testCase);
+    }
+
+    public int getMaxTimeMills() {
+        return maxTimeMills;
     }
 
     public List<TestCase> getTestCases() {

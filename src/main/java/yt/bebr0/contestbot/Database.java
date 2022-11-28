@@ -24,7 +24,6 @@ public class Database {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:bot_db.sqlite");
 
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS Admins(discord_id TEXT PRIMARY KEY)");
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -51,7 +50,7 @@ public class Database {
 
     public void addTask(@NotNull Task task) {
         try {
-            statement.execute("INSERT INTO Tasks VALUES('" + task.getName() + "', '" + task.getTask() + "')");
+            statement.execute("INSERT INTO Tasks VALUES('" + task.getName() + "', '" + task.getTask() + "', " + task.getMaxTimeMills() + ");");
         }
         catch (SQLException ignored) {}
     }
@@ -80,7 +79,7 @@ public class Database {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Tasks WHERE task_name='" + name + "'");
 
             if (resultSet.next()) {
-                Task task = new Task(resultSet.getString(1), resultSet.getString(2));
+                Task task = new Task(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3));
 
                 for (TestCase testCase: getTestCases(task)) {
                     task.addTestCase(testCase);
@@ -110,7 +109,7 @@ public class Database {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Tasks");
 
             while (resultSet.next()) {
-                result.add(new Task(resultSet.getString(1), resultSet.getString(2)));
+                result.add(new Task(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

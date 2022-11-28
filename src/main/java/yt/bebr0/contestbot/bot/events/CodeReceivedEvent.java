@@ -55,10 +55,12 @@ public class CodeReceivedEvent extends ListenerAdapter {
 
                         StringBuilder message = new StringBuilder("```");
                         for (int i = 0; i < result.size(); i++) {
-                            if (result.get(i).answer())
+                            if (result.get(i).answer() && result.get(i).timeMilliseconds() <= task.getMaxTimeMills())
                                 message.append(i).append(": ✅\n");
+                            else if (result.get(i).timeMilliseconds() > task.getMaxTimeMills())
+                                message.append(i).append(": ❌ - Лимит времени исчерпан\n");
                             else
-                                message.append(i).append(": ❌\n");
+                                message.append(i).append(": ❌ - Ответ не верный\n");
                         }
 
                         message.append("```");

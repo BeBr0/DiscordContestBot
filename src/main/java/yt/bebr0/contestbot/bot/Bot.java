@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.utils.data.DataObject;
 import yt.bebr0.contestbot.bot.events.CodeReceivedEvent;
 import yt.bebr0.contestbot.bot.events.SlashCommandEvent;
 
+import java.util.Scanner;
+
 /**
  * File is part of BeBrAPI. Thank you for using it! Also check out my YouTube channel where you can also leave your suggestions! https://www.youtube.com/c/BeBr0
  *
@@ -25,7 +27,7 @@ public class Bot {
     private Bot() {}
 
     public void initialize() {
-        jda = JDABuilder.createDefault("MTAzMDc3Mzk2NTAwMzY5MDA1NA.GXxciM.7NgCxfrpnrdRTvDuEXfaqkrk9HgAdiTv3_6dTU")
+        jda = JDABuilder.createDefault("MTAyNjkyMTU0NDEyMDgxNTY2Ng.GX76kB.324N632tqj7Wq0l39K9BQGfZdfa7MxbPmMdSE4")
                 .addEventListeners(new CodeReceivedEvent(), new SlashCommandEvent())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .build();
