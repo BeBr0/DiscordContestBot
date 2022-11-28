@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import yt.bebr0.contestbot.Database;
 import yt.bebr0.contestbot.bot.Bot;
+import yt.bebr0.contestbot.testing.TestResult;
 import yt.bebr0.contestbot.testing.languages.Language;
 import yt.bebr0.contestbot.testing.languages.impls.JavaTester;
 import yt.bebr0.contestbot.testing.languages.impls.PythonTester;
@@ -50,11 +51,11 @@ public class CodeReceivedEvent extends ListenerAdapter {
                             return;
                         }
 
-                        List<Boolean> result = language.getTester().test(task, code);
+                        List<TestResult> result = language.getTester().test(task, code);
 
                         StringBuilder message = new StringBuilder("```");
                         for (int i = 0; i < result.size(); i++) {
-                            if (result.get(i))
+                            if (result.get(i).answer())
                                 message.append(i).append(": ✅\n");
                             else
                                 message.append(i).append(": ❌\n");

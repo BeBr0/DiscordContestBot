@@ -1,5 +1,6 @@
 package yt.bebr0.contestbot.testing.languages.impls;
 
+import yt.bebr0.contestbot.testing.TestResult;
 import yt.bebr0.contestbot.testing.languages.Tester;
 import yt.bebr0.contestbot.testing.task.Task;
 
@@ -27,7 +28,7 @@ public class JavaTester extends Tester {
     private final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
     @Override
-    public List<Boolean> test(Task task, String code) {
+    public List<TestResult> test(Task task, String code) {
         return super.test(task, code);
     }
 
