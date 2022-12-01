@@ -52,15 +52,12 @@ public class CodeReceivedEvent extends ListenerAdapter {
 
                         for (int i = 0; i < result.size(); i++) {
                             logMessage.append("\tTest № ").append(i + 1).append("\n")
-                                    .append("\tTime: ").append(result.get(i).timeMilliseconds()).append(" mills\n")
                                     .append("\tResult: ").append(result.get(i).answer()).append("\n")
                                     .append("\tInput: ").append(Database.instance.getTestCases(task).get(i).input()).append("\n")
                                     .append("\tOutput: ").append(result.get(i).answerText());
 
-                            if (result.get(i).answer() && result.get(i).timeMilliseconds() <= task.getMaxTimeMills())
+                            if (result.get(i).answer())
                                 message.append("Тест ").append(i + 1).append(": ✅\n");
-                            else if (result.get(i).timeMilliseconds() > task.getMaxTimeMills())
-                                message.append("Тест ").append(i + 1).append(": ❌ - Лимит времени исчерпан\n");
                             else if (result.get(i).answerText().equals(Tester.noOutText) || result.get(i).answerText().equals(""))
                                 message.append("Тест ").append(i + 1).append(": ❌ - Ошибка выполнения программы\n");
                             else

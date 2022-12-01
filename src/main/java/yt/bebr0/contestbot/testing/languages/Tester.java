@@ -19,37 +19,9 @@ public abstract class Tester {
         List<TestResult> result = new ArrayList<>();
 
         for (TestCase testCase : Database.instance.getTestCases(task)) {
-            AtomicReference<Integer> time = new AtomicReference<>();
-            time.set(0);
-
-            Thread timeThread = new Thread(() -> {
-                while (true) {
-                    if (time.get() > task.getMaxTimeMills()) {
-                        break;
-                    }
-
-                    if (time.get() == -1) {
-                        break;
-                    }
-
-                    time.set(time.get() + 1);
-
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException ignored) {}
-                }
-            });
-
-            timeThread.start();
             String res = run(code, testCase.input());
-            timeThread.interrupt();
 
-            if (time.get() > task.getMaxTimeMills()) {
-                result.add(new TestResult(false, res, time.get()));
-            }
-            else {
-                result.add(new TestResult(testCase.isPassed(res), res, time.get()));
-            }
+            result.add(new TestResult(testCase.isPassed(res), res));
 
             if (!result.get(result.size() - 1).answer())
                 break;
