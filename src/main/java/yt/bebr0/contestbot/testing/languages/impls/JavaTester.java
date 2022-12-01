@@ -52,38 +52,33 @@ public class JavaTester extends Tester {
             File output = new File("output.txt");
             File inputFile = new File("input.txt");
 
-            try {
-                output.createNewFile();
-                inputFile.createNewFile();
+            output.createNewFile();
+            inputFile.createNewFile();
 
-                fileWriter.close();
+            fileWriter.close();
 
-                fileWriter = new FileWriter(inputFile);
-                fileWriter.write(input);
+            fileWriter = new FileWriter(inputFile);
+            fileWriter.write(input);
 
-                fileWriter.close();
+            fileWriter.close();
 
-                ProcessBuilder processBuilder = new ProcessBuilder("java", fileToCompile.getAbsolutePath());
+            ProcessBuilder processBuilder = new ProcessBuilder("java", fileToCompile.getAbsolutePath());
 
-                processBuilder.redirectInput(inputFile);
-                processBuilder.redirectOutput(output);
+            processBuilder.redirectInput(inputFile);
+            processBuilder.redirectOutput(output);
 
-                Process process = processBuilder.start();
+            Process process = processBuilder.start();
 
-                Scanner scanner = new Scanner(output);
-                StringBuilder outputString = new StringBuilder();
+            Scanner scanner = new Scanner(output);
+            StringBuilder outputString = new StringBuilder();
 
-                process.waitFor();
-                while (scanner.hasNextLine()) {
-                    outputString.append(scanner.nextLine());
-                }
-
-                return outputString.toString();
+            process.waitFor();
+            while (scanner.hasNextLine()) {
+                outputString.append(scanner.nextLine());
             }
-            catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
+
+            return outputString.toString();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 

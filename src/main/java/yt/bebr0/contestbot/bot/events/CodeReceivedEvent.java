@@ -47,7 +47,16 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         List<TestResult> result = language.getTester().test(task, code);
 
                         StringBuilder message = new StringBuilder("```");
+                        StringBuilder logMessage = new StringBuilder("[LOG]: User " + event.getAuthor().getName() + "("+
+                                event.getAuthor().getId() + ") is running test of task '" + task.getName() + "': \n");
+
                         for (int i = 0; i < result.size(); i++) {
+                            logMessage.append("\tTest № ").append(i + 1).append("\n")
+                                    .append("\tTime: ").append(result.get(i).timeMilliseconds()).append(" mills\n")
+                                    .append("\tResult: ").append(result.get(i).answer()).append("\n")
+                                    .append("\tInput: ").append(Database.instance.getTestCases(task).get(i).input()).append("\n")
+                                    .append("\tOutput: ").append(result.get(i).answerText());
+
                             if (result.get(i).answer() && result.get(i).timeMilliseconds() <= task.getMaxTimeMills())
                                 message.append("Тест ").append(i + 1).append(": ✅\n");
                             else if (result.get(i).timeMilliseconds() > task.getMaxTimeMills())
@@ -59,6 +68,7 @@ public class CodeReceivedEvent extends ListenerAdapter {
                         }
 
                         message.append("```");
+                        System.out.println(logMessage.append("\n-------------------------"));
 
                         Bot.instance.textTo(event.getAuthor().getId(), message.toString());
                         break;
